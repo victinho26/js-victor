@@ -1,0 +1,48 @@
+let star;
+let score = 0;
+
+function setup() {
+  createCanvas(400, 400);
+  star = createStar();
+}
+
+function draw() {
+  background(220);
+  
+  // Mostrar a estrela
+  star.show();
+  
+  // Mostrar a pontuação
+  fill(0);
+  textSize(20);
+  text("Pontuação: " + score, 10, 30);
+}
+
+function mousePressed() {
+  if (star.isMouseOver()) {
+    score++;
+    star = createStar(); // Criar uma nova estrela
+  }
+}
+
+function createStar() {
+  return new Star(random(width), random(height));
+}
+
+class Star {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = 20;
+  }
+
+  show() {
+    fill(255, 204, 0); // Cor da estrela
+    ellipse(this.x, this.y, this.size);
+  }
+  
+  isMouseOver() {
+    let d = dist(mouseX, mouseY, this.x, this.y);
+    return d < this.size / 2; // Verifica se o mouse está sobre a estrela
+  }
+}
